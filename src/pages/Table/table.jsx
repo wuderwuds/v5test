@@ -1,52 +1,22 @@
-import { useEffect } from "react"
-import { Zoom, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
 import { useAuth } from "../../hooks/useAuth"
 import { useQuery } from "@tanstack/react-query";
 import { TablesShow } from "../../components/TableShow/tableShow";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { apiAllTable } from "../../api";
 
 
 export const Table = () => {
 const {token} = useAuth();
-useEffect(()=>{
-    if (!token)  toast.warn('Пожалуйста авторизируйтесь', {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Zoom,
-            });
-    
-},[token]);
 
 const {data, isLoading, refetch} = useQuery({
     queryKey: ['tables'],
     queryFn: async () => {
-        try {
-            const res = await fetch(`https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get`, {
-                headers: {
-                    'x-auth':token,
-                }
-            }); 
+        if(!token) return null;
+        return await apiAllTable(token);
+    }
+});
 
-            const responce = await res.json();
-            if (res.status===200) {
-                console.log(responce.data);
-                return responce.data;
-            }
-
-        return alert(responce.message)
-        } catch (error) {
-            return alert(error)
-        }
-    }, 
-})
 if (isLoading) return (
         <div>
           <Backdrop
@@ -58,14 +28,9 @@ if (isLoading) return (
         </div>
     );
 
-
-    
-  return (
+    return (
     <>
-   
-        {data && <TablesShow refetch={refetch} data={data} token={token}/>
-        }
-    
+    {data && <TablesShow refetch={refetch} data={data} token={token}/>}
     </>
     )
 

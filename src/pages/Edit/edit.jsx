@@ -43,7 +43,7 @@ const navigate = useNavigate();
 
         };
     const onSubmit = async (value, {resetForm}) => {
-        console.log(params.editId);
+
         const overObj = {
             companySigDate: new Date().toISOString(),
             employeeSigDate: new Date().toISOString()

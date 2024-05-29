@@ -1,18 +1,30 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './header.module.css'
-import { useAuth } from '../../hooks/useAuth'
 import { Button } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { cleanToken } from '../../redux/slices/tokenSlace';
 
 
 
 export const Header = () => {
 
-const {token} = useAuth();
+const token = useSelector(state=>state.token);
+const dispatch = useDispatch();
 const navigate = useNavigate();
+    
     return (
     
-        <header className={styles.header}> 
-            <Button onClick={()=>navigate('/create')} variant="contained">Добавить</Button>
+        <header className={styles.header}>
+            
+            <div className={styles.headerMenu}>
+                <li className={token ? '' : styles.lioff}>      
+                    <Button 
+                    onClick={()=>navigate('/create')} variant="contained"
+                    > Добавить
+                    </Button>
+                </li>
+            </div>
+            
             <div className={styles.headerMenu}>
                 <li className={ token ? '' : ''}> 
                     <NavLink 
@@ -21,7 +33,6 @@ const navigate = useNavigate();
                     </NavLink> 
                 </li>
 
-        
                 <li className={token ? styles.lioff : ''}> 
                     <NavLink
                     className={({ isActive }) => isActive ? styles.header_b : styles.header_a}
@@ -31,15 +42,13 @@ const navigate = useNavigate();
                 
                 <li className={token ? '' : styles.lioff}> 
                     <Link
-                    onClick={()=>
-                        localStorage.removeItem('v5token')
-                        
+                    onClick={()=>dispatch(cleanToken())
                     }
                     className={styles.header_a}
-                    to='/signin'> Log out
+                    to='/signin'
+                    > Log out
                     </Link>
                 </li>
-
 
             </div>         
         </header>

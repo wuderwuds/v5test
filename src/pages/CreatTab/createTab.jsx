@@ -56,7 +56,7 @@ export const CreateTab = () => {
     
     return (
         <>
-        <div className={styles.wrapper}>
+        {token && <div className={styles.wrapper}>
             <h1>Добавить</h1>
             <FormCreateEditTab
             validationSchema={createTabSchema} 
@@ -64,6 +64,7 @@ export const CreateTab = () => {
             initialValues={initialValues}
             />
         </div>
+        }
         </>
     )
 }

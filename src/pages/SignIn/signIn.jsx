@@ -5,6 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 import { Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { FormRegAuth } from '../../forms/FormAuth/formAuth';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../redux/slices/tokenSlace';
+import { useNoAuth } from '../../hooks/useNoAuth';
 
 export const toastify = (message, toastState) => {
     return toastState (message, {
@@ -21,6 +24,8 @@ export const toastify = (message, toastState) => {
 };
 
 export const SignIn = () => {
+    const {token} = useNoAuth();
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -55,14 +60,13 @@ export const SignIn = () => {
 
         
         const res = await mutateAsync(values);
-        console.log(res);
         if (!res.ok) {
             return toastify('Что-то пошло не так, попробуйте позже', toast.warn);
         };
         
         const responce = await res.json();
         if (responce.error_code === 0) {
-            localStorage.setItem('v5token', responce.data.token);
+            dispatch(setToken(responce.data.token));
             navigate('/');
             return toastify('Вы успешно авторизировались',toast.success);
                      
@@ -72,7 +76,7 @@ export const SignIn = () => {
 
     return (
         <>
-        <div className={styles.wrapper}>
+        {!token && <div className={styles.wrapper}>
             <h1>Войти</h1>
             <FormRegAuth
             validationSchema={signInSchema} 
@@ -80,6 +84,7 @@ export const SignIn = () => {
             initialValues={initialValues}
             />
         </div>
+        }
         </>
     )
 }

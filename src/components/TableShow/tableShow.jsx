@@ -28,7 +28,6 @@ export const TablesShow = ({data, token, refetch}) => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };

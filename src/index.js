@@ -8,6 +8,9 @@ import { SignIn } from './pages/SignIn/signIn';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CreateTab } from './pages/CreatTab/createTab';
 import { Edit } from './pages/Edit/edit';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -39,9 +42,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
   <React.StrictMode>
+    <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router}/>
     </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
 

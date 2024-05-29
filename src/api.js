@@ -61,3 +61,14 @@ export const apiCreateTab = async (data, token) => {
         toastError();
     }
 }
+
+export const apiEdit = async (data, token, id) => {
+    try {
+        const res = await requestApi(url_DTO('set', id), 'POST', token, data);
+        const responce = await res.json();
+        if(responce.error_code===0) return responce;
+        return toastError(); 
+    } catch (error) {
+        toastError();
+    }
+}

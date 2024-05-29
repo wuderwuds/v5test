@@ -1,15 +1,18 @@
-import * as Yup from 'yup';
-import styles from './createTab.module.css'
-import { FormCreateEditTab } from '../../forms/FormCreateTab/formCreateEditTab';
-import { apiCreateTab } from '../../api';
-import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { toastify } from '../SignIn/signIn';
+import { useNavigate, useParams } from "react-router-dom"
+import { useAuth } from "../../hooks/useAuth";
+import { toastify } from "../SignIn/signIn";
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+import styles from '../CreatTab/createTab.module.css';
+import { apiEdit } from "../../api";
+import { FormCreateEditTab } from "../../forms/FormCreateTab/formCreateEditTab";
 
-export const CreateTab = () => {
-    const {token} = useAuth();
-    const navigate = useNavigate()
+
+export const Edit = () => {
+    
+const params = useParams();
+const {token} = useAuth();
+const navigate = useNavigate();
     const textRequired = () => {
         return 'Обязательно'
     };
@@ -40,15 +43,16 @@ export const CreateTab = () => {
 
         };
     const onSubmit = async (value, {resetForm}) => {
+        console.log(params.editId);
         const overObj = {
             companySigDate: new Date().toISOString(),
             employeeSigDate: new Date().toISOString()
         }
         value = {...value, ...overObj};
-        const res = await apiCreateTab(value, token)
+        const res = await apiEdit(value, token, params.editId)
         if(res.error_code === 0) {
             navigate('/');
-            toastify('Успешно добавлен', toast.success)
+            toastify('Данные изменены', toast.success)
             resetForm();
         }
         return;        
@@ -57,11 +61,12 @@ export const CreateTab = () => {
     return (
         <>
         <div className={styles.wrapper}>
-            <h1>Добавить</h1>
+            <h1>Изменить</h1>
             <FormCreateEditTab
             validationSchema={createTabSchema} 
             onSubmit={onSubmit}
             initialValues={initialValues}
+            typeForm={'edit'}
             />
         </div>
         </>

@@ -9,8 +9,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import { apiDeleteTable } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   { id: 'documentName', label: 'documentName', minWidth: 100 },
@@ -24,11 +25,11 @@ const columns = [
 ];
 
 export const TablesShow = ({data, token, refetch}) => {
-
+  const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -51,6 +52,7 @@ export const TablesShow = ({data, token, refetch}) => {
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell>action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,12 +74,15 @@ export const TablesShow = ({data, token, refetch}) => {
                     })}
                         <TableCell>
                           <IconButton
+                          onClick={()=>navigate(`/edit/${row.id}`)}
+                          >
+                            <EditNoteIcon/>
+                          </IconButton>
+                          
+                          <IconButton
                           onClick={()=>apiDeleteTable(row.id, token, refetch)}
                           sx={{marginTop:1}}aria-label="delete">
                             <DeleteIcon/>
-                          </IconButton>
-                          <IconButton color="primary" aria-label="add to shopping cart">
-                            <AddShoppingCartIcon/>
                           </IconButton>
                         </TableCell>
 
@@ -90,7 +95,7 @@ export const TablesShow = ({data, token, refetch}) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[25, 100]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}

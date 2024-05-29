@@ -3,13 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Button from '@mui/material/Button';
 
 
-export const FormCreteTab = ({validationSchema, onSubmit, initialValues}) => {
-   
-
-
-    
-
-
+export const FormCreateEditTab = ({validationSchema, onSubmit, initialValues, typeForm}) => {
+       
     return (        
         <Formik
         initialValues={initialValues}
@@ -71,7 +66,7 @@ export const FormCreteTab = ({validationSchema, onSubmit, initialValues}) => {
                     sx={{ marginTop: 1 }}
                     variant="contained" 
                     color='success' 
-                > Создать
+                > {typeForm==='edit'? 'Изменить': 'Создать'}
                 </Button>
             
             </Form>

@@ -23,7 +23,7 @@ useEffect(()=>{
     
 },[token]);
 
-const {data} = useQuery({
+const {data, refetch} = useQuery({
     queryKey: ['tables'],
     queryFn: async () => {
         try {
@@ -32,6 +32,7 @@ const {data} = useQuery({
                     'x-auth':token,
                 }
             }); 
+
             const responce = await res.json();
             if (res.status===200) {
                 console.log(responce.data);
@@ -48,7 +49,7 @@ const {data} = useQuery({
     return (
     <>
    
-        {data && <TablesShow data={data}/>
+        {data && <TablesShow refetch={refetch} data={data} token={token}/>
         }
     
     </>

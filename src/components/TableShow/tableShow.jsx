@@ -7,6 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { apiDeleteTable } from '../../api';
 
 const columns = [
   { id: 'documentName', label: 'documentName', minWidth: 100 },
@@ -17,11 +21,10 @@ const columns = [
   { id: 'employeeNumber', label: 'employeeNumber', minWidth: 100 },
   { id: 'employeeSigDate', label: 'employeeSigDate', minWidth: 100 },
   { id: 'employeeSignatureName', label: 'employeeSignatureName', minWidth: 100 },
-
 ];
 
-export const TablesShow = ({data}) => {
-    // console.log(data);
+export const TablesShow = ({data, token, refetch}) => {
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -33,7 +36,6 @@ export const TablesShow = ({data}) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-console.log(data);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -55,20 +57,35 @@ console.log(data);
             {data.map((row) => {
                 return (
                   <TableRow 
-               
-                  hover role="checkbox" tabIndex={-1} key={row.id}>
+                  tabIndex={-1}
+                  hover role="checkbox"  
+                  key={row.id}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {value}
                         </TableCell>
+                        
                       );
                     })}
+                        <TableCell>
+                        <IconButton
+                        onClick={()=>apiDeleteTable(row.id, token, refetch)}
+                        sx={{marginTop:1}}aria-label="delete">
+                          <DeleteIcon/>
+                        </IconButton>
+                        <IconButton color="primary" aria-label="add to shopping cart">
+                        <AddShoppingCartIcon/>
+                        </IconButton>
+                        </TableCell>
 
                   </TableRow>
+                  
                 );
               })}
+              
           </TableBody>
         </Table>
       </TableContainer>

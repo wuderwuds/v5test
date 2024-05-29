@@ -71,14 +71,14 @@ export const TablesShow = ({data, token, refetch}) => {
                       );
                     })}
                         <TableCell>
-                        <IconButton
-                        onClick={()=>apiDeleteTable(row.id, token, refetch)}
-                        sx={{marginTop:1}}aria-label="delete">
-                          <DeleteIcon/>
-                        </IconButton>
-                        <IconButton color="primary" aria-label="add to shopping cart">
-                        <AddShoppingCartIcon/>
-                        </IconButton>
+                          <IconButton
+                          onClick={()=>apiDeleteTable(row.id, token, refetch)}
+                          sx={{marginTop:1}}aria-label="delete">
+                            <DeleteIcon/>
+                          </IconButton>
+                          <IconButton color="primary" aria-label="add to shopping cart">
+                            <AddShoppingCartIcon/>
+                          </IconButton>
                         </TableCell>
 
                   </TableRow>

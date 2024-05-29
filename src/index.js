@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Table } from './pages/Table/table';
 import { SignIn } from './pages/SignIn/signIn';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CreateTab } from './pages/CreatTab/createTab';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/signin',
         element: <SignIn/>
+      },
+      {
+        path: '/create',
+        element: <CreateTab/>
       }
     ]
   }

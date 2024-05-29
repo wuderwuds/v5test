@@ -6,6 +6,20 @@ import { Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { FormRegAuth } from '../../forms/FormAuth/formAuth';
 
+export const toastify = (message, toastState) => {
+    return toastState (message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+        });
+};
+
 export const SignIn = () => {
 
     const navigate = useNavigate();
@@ -38,19 +52,7 @@ export const SignIn = () => {
 
     const onSubmit = async (values) => {
         
-        const toastify = (message, toastState) => {
-            return toastState (message, {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Zoom,
-                });
-        };
+
         
         const res = await mutateAsync(values);
         console.log(res);
@@ -59,13 +61,13 @@ export const SignIn = () => {
         };
         
         const responce = await res.json();
-        console.log(responce);
-        if (responce.error_code !== 0) {
-            return toastify('Неправильное имя пользователя или пароль', toast.warn);
+        if (responce.error_code === 0) {
+            localStorage.setItem('v5token', responce.data.token);
+            navigate('/');
+            return toastify('Вы успешно авторизировались',toast.success);
+                     
         };
-        localStorage.setItem('v5token', responce.data.token);
-        toastify('Вы успешно авторизировались',toast.success);
-        navigate('/');
+        return toastify('Неправильное имя пользователя или пароль', toast.warn);
        };
 
     return (
@@ -73,7 +75,6 @@ export const SignIn = () => {
         <div className={styles.wrapper}>
             <h1>Войти</h1>
             <FormRegAuth
-            typeForm={'auth'} 
             validationSchema={signInSchema} 
             onSubmit={onSubmit}
             initialValues={initialValues}

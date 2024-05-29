@@ -1,17 +1,18 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './header.module.css'
 import { useAuth } from '../../hooks/useAuth'
+import { Button } from '@mui/material';
 
 
 
 export const Header = () => {
 
 const {token} = useAuth();
-
+const navigate = useNavigate();
     return (
     
         <header className={styles.header}> 
-
+            <Button onClick={()=>navigate('/create')} variant="contained">Добавить</Button>
             <div className={styles.headerMenu}>
                 <li className={ token ? '' : ''}> 
                     <NavLink 

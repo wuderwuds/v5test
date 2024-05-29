@@ -39,7 +39,8 @@ const toastError = () => {
         transition: Zoom,
         })
 }
-export const apiDeleteTable = async(id, token, callback) => {
+
+export const apiDeleteTable = async (id, token, callback) => {
     try {
         const res = await requestApi(url_DTO('delete', id), 'POST', token);
         const responce = await res.json();
@@ -49,3 +50,14 @@ export const apiDeleteTable = async(id, token, callback) => {
         toastError();
     }
 };
+
+export const apiCreateTab = async (data, token) => {
+    try {
+        const res = await requestApi(url_DTO('create'), 'POST', token, data);
+        const responce = await res.json();
+        if(responce.error_code===0) return responce;
+        return toastError();    
+    } catch (error) {
+        toastError();
+    }
+}

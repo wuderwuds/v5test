@@ -4,12 +4,14 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { useAuth } from "../../hooks/useAuth"
 import { useQuery } from "@tanstack/react-query";
 import { TablesShow } from "../../components/TableShow/tableShow";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 export const Table = () => {
 const {token} = useAuth();
-
 useEffect(()=>{
-    if (!token)  toast.warn('Пройдите авторизацию', {
+    if (!token)  toast.warn('Пожалуйста авторизируйтесь', {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: true,
@@ -23,7 +25,7 @@ useEffect(()=>{
     
 },[token]);
 
-const {data, refetch} = useQuery({
+const {data, isLoading, refetch} = useQuery({
     queryKey: ['tables'],
     queryFn: async () => {
         try {
@@ -45,8 +47,20 @@ const {data, refetch} = useQuery({
         }
     }, 
 })
+if (isLoading) return (
+        <div>
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </div>
+    );
 
-    return (
+
+    
+  return (
     <>
    
         {data && <TablesShow refetch={refetch} data={data} token={token}/>

@@ -2,6 +2,7 @@ import { Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { setData } from './redux/slices/dataSlace';
 
+
 const URL = 'https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs';
 
 const url_DTO = (hand, id=null) => {

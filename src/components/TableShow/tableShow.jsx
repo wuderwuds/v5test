@@ -74,7 +74,7 @@ export const TablesShow = ({data, token, refetch}) => {
                  })}
                   <TableCell>
                     <IconButton
-                    onClick={()=>navigate(`/edit/${row.id}`)}
+                    onClick={()=>navigate(`/v5test/edit/${row.id}`)}
                     > <EditNoteIcon/>
                     </IconButton>
                     

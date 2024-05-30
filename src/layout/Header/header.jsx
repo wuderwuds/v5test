@@ -19,7 +19,7 @@ const navigate = useNavigate();
             <div className={styles.headerMenu}>
                 <li className={token ? '' : styles.lioff}>      
                     <Button 
-                    onClick={()=>navigate('/create')} variant="contained"
+                    onClick={()=>navigate('/v5test/create')} variant="contained"
                     > Добавить
                     </Button>
                 </li>
@@ -29,14 +29,14 @@ const navigate = useNavigate();
                 <li className={ token ? '' : ''}> 
                     <NavLink 
                     className={({ isActive }) => isActive ? styles.header_b : styles.header_a}
-                    to='/'> Table 
+                    to='/v5test'> Table 
                     </NavLink> 
                 </li>
 
                 <li className={token ? styles.lioff : ''}> 
                     <NavLink
                     className={({ isActive }) => isActive ? styles.header_b : styles.header_a}
-                    to='/signin'> Sign in
+                    to='/v5test/signin'> Sign in
                     </NavLink>
                 </li>
                 
@@ -45,7 +45,7 @@ const navigate = useNavigate();
                     onClick={()=>dispatch(cleanToken())
                     }
                     className={styles.header_a}
-                    to='/signin'
+                    to='/v5test/signin'
                     > Log out
                     </Link>
                 </li>

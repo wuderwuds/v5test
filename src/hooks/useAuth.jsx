@@ -8,7 +8,7 @@ const token = useSelector(state=>state.token)
 const navigate = useNavigate();
 useEffect(() => {
 if (!token) {
-  navigate('/signin');
+  navigate('/v5test/signin');
   toast.warn('Пожалуйста авторизируйтесь', {
     position: "top-center",
     autoClose: 1000,

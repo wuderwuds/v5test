@@ -6,7 +6,7 @@ export const useNoAuth = () => {
 const  token = useSelector(state=>state.token)
 const navigate = useNavigate();
 useEffect(() => {
-if (token) navigate('/')
+if (token) navigate('/v5test')
 }, [navigate, token])
 
   return {token}

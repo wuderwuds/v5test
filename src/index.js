@@ -14,7 +14,7 @@ import { store } from './redux/store';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/v5test',
     element: <Layout/>,
     children: [
       {
@@ -22,15 +22,15 @@ const router = createBrowserRouter([
         element: <Table/>
       },
       {
-        path: '/signin',
+        path: '/v5test/signin',
         element: <SignIn/>
       },
       {
-        path: '/create',
+        path: '/v5test/create',
         element: <CreateTab/>
       },
       {
-        path: '/edit/:editId',
+        path: '/v5test/edit/:editId',
         element: <Edit/>
       }
     ]

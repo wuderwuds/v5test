@@ -47,7 +47,7 @@ export const Edit = () => {
         delete value.id;
         const res = await apiEdit(value, token, params.editId)
         if(res.error_code === 0) {
-            navigate('/');
+            navigate('/v5test');
             toastify('Успех', toast.success);
             resetForm();
         }

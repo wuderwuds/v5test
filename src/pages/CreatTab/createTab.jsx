@@ -50,7 +50,7 @@ export const CreateTab = () => {
         value = {...value, ...overObj};
         const res = await apiCreateTab(value, token)
         if(res.error_code === 0) {
-            navigate('/');
+            navigate('/v5test');
             toastify('Успешно добавлен', toast.success)
             resetForm();
         }

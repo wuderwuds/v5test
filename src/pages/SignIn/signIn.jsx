@@ -67,7 +67,7 @@ export const SignIn = () => {
         const responce = await res.json();
         if (responce.error_code === 0) {
             dispatch(setToken(responce.data.token));
-            navigate('/');
+            navigate('/v5test');
             return toastify('Вы успешно авторизировались',toast.success);
                      
         };

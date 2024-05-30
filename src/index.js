@@ -1,13 +1,52 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import { Layout } from './layout';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Table } from './pages/Table/table';
+import { SignIn } from './pages/SignIn/signIn';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CreateTab } from './pages/CreatTab/createTab';
+import { Edit } from './pages/Edit/edit';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
+const queryClient = new QueryClient();
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout/>,
+    children: [
+      {
+        index: true,
+        element: <Table/>
+      },
+      {
+        path: '/signin',
+        element: <SignIn/>
+      },
+      {
+        path: '/create',
+        element: <CreateTab/>
+      },
+      {
+        path: '/edit/:editId',
+        element: <Edit/>
+      }
+    ]
+  }
+])
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router}/>
+    </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
 

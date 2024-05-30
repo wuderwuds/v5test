@@ -1,5 +1,6 @@
 export const myInitialData = {
-    token:'',    
+    token:'',
+    data: [],    
 }
 
 export const getInitState = () => {

@@ -4,16 +4,18 @@ import { TablesShow } from "../../components/TableShow/tableShow";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { apiAllTable } from "../../api";
+import { useDispatch } from "react-redux";
 
 
 export const Table = () => {
 const {token} = useAuth();
+const dispatch = useDispatch();
 
 const {data, isLoading, refetch} = useQuery({
     queryKey: ['tables'],
     queryFn: async () => {
         if(!token) return null;
-        return await apiAllTable(token);
+        return await apiAllTable(token, dispatch);
     }
 });
 

@@ -54,42 +54,39 @@ export const TablesShow = ({data, token, refetch}) => {
               <TableCell>action</TableCell>
             </TableRow>
           </TableHead>
+          
           <TableBody>
             {data.map((row) => {
+              return (
+              <TableRow 
+              tabIndex={-1}
+              hover role="checkbox"  
+              key={row.id}
+              >
+                {columns.map((column) => {
+                const value = row[column.id];
                 return (
-                  <TableRow 
-                  tabIndex={-1}
-                  hover role="checkbox"  
-                  key={row.id}
-                  >
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
+                  <TableCell key={column.id} align={column.align}>
+                    {value}
+                  </TableCell>
                         
-                      );
-                    })}
-                        <TableCell>
-                          <IconButton
-                          onClick={()=>navigate(`/edit/${row.id}`)}
-                          >
-                            <EditNoteIcon/>
-                          </IconButton>
-                          
-                          <IconButton
-                          onClick={()=>apiDeleteTable(row.id, token, refetch)}
-                          sx={{marginTop:1}}aria-label="delete">
-                            <DeleteIcon/>
-                          </IconButton>
-                        </TableCell>
-
-                  </TableRow>
-                  
-                );
-              })}
-              
+                  );
+                 })}
+                  <TableCell>
+                    <IconButton
+                    onClick={()=>navigate(`/edit/${row.id}`)}
+                    > <EditNoteIcon/>
+                    </IconButton>
+                    
+                    <IconButton
+                    onClick={()=>apiDeleteTable(row.id, token, refetch)}
+                    sx={{marginTop:1}}aria-label="delete">
+                      <DeleteIcon/>
+                    </IconButton>
+                  </TableCell>
+              </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

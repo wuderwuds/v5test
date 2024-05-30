@@ -1,5 +1,6 @@
 import { Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { setData } from './redux/slices/dataSlace';
 
 const URL = 'https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs';
 
@@ -72,12 +73,15 @@ export const apiEdit = async (data, token, id) => {
     }
 };
 
-export const apiAllTable = async (token) => {
+export const apiAllTable = async (token, callback) => {
     try {
         const res = await requestApi(url_DTO('get'), 'GET', token);
         if(res.status!==200) return toastError();
         const responce = await res.json();
-        if(responce.error_code===0) return responce.data;
+        if(responce.error_code===0) {
+            callback(setData(responce.data));
+            return responce.data;
+        }
         return toastError(); 
     } catch (error) {
         toastError();

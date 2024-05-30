@@ -6,13 +6,16 @@ import * as Yup from 'yup';
 import styles from '../CreatTab/createTab.module.css';
 import { apiEdit } from "../../api";
 import { FormCreateEditTab } from "../../forms/FormCreateTab/formCreateEditTab";
+import { useSelector } from "react-redux";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { IconButton } from '@mui/material';
 
 
 export const Edit = () => {
-    
-const params = useParams();
-const {token} = useAuth();
-const navigate = useNavigate();
+    const data = useSelector(state=>state.data);    
+    const params = useParams();
+    const {token} = useAuth();
+    const navigate = useNavigate();
     const textRequired = () => {
         return 'Обязательно'
     };
@@ -31,17 +34,9 @@ const navigate = useNavigate();
         employeeSignatureName: Yup.string()
                            .required(textRequired())
         });
-        
-    const initialValues = {
-        documentName: '',
-        companySignatureName: '',
-        documentStatus: '',
-        documentType: '',
-        employeeNumber: '',
-        employeeSignatureName: '',
 
+    const initialValues = data.find(el=>el.id===params.editId);
 
-        };
     const onSubmit = async (value, {resetForm}) => {
 
         const overObj = {
@@ -49,10 +44,11 @@ const navigate = useNavigate();
             employeeSigDate: new Date().toISOString()
         }
         value = {...value, ...overObj};
+        delete value.id;
         const res = await apiEdit(value, token, params.editId)
         if(res.error_code === 0) {
             navigate('/');
-            toastify('Данные изменены', toast.success)
+            toastify('Успех', toast.success);
             resetForm();
         }
         return;        
@@ -61,6 +57,9 @@ const navigate = useNavigate();
     return (
         <>
         <div className={styles.wrapper}>
+            <IconButton onClick={()=>navigate(-1)}>
+            <ArrowBackIcon/>
+            </IconButton>
             <h1>Изменить</h1>
             <FormCreateEditTab
             validationSchema={createTabSchema} 

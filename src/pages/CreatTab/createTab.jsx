@@ -6,6 +6,9 @@ import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toastify } from '../SignIn/signIn';
 import { toast } from 'react-toastify';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { IconButton } from '@mui/material';
+
 
 export const CreateTab = () => {
     const {token} = useAuth();
@@ -57,6 +60,9 @@ export const CreateTab = () => {
     return (
         <>
         {token && <div className={styles.wrapper}>
+            <IconButton onClick={()=>navigate(-1)}>
+            <ArrowBackIcon/>
+            </IconButton>
             <h1>Добавить</h1>
             <FormCreateEditTab
             validationSchema={createTabSchema} 

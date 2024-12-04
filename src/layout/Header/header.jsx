@@ -45,7 +45,7 @@ const navigate = useNavigate();
                     onClick={()=>dispatch(cleanToken())
                     }
                     className={styles.header_a}
-                    to='/v5test/signin'
+                    to='/v5test/'
                     > Log out
                     </Link>
                 </li>
